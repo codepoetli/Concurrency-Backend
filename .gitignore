@@ -19,3 +19,12 @@
 
 # Go workspace file
 go.work
+
+.idea
+.vscode
+.run
+
+# More for security concerns
+configs/config.ini
+userdata
+logdata
