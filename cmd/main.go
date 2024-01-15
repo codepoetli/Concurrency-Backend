@@ -1,7 +1,10 @@
 package main
 
 import (
+	initialization "Concurrency-Backend/init"
 	"Concurrency-Backend/init/router"
+	"Concurrency-Backend/utils/jwt"
+	"Concurrency-Backend/utils/logger"
 	"context"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -10,8 +13,17 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
-func InitAll() {
+// 用于单机的极简版抖音后端程序
 
+// initAll 初始化所有的部分
+func initAll() {
+	initialization.InitConfig()
+	initialization.InitDB()
+	initialization.InitOSS()
+	initialization.InitRDB()
+	logger.InitLogger(initialization.LogConf)
+
+	jwt.InitJwt()
 }
 
 func main() {

@@ -64,3 +64,22 @@ func (u *UserService) UserRegisterInfo(username, password string) error {
 	}
 	return nil
 }
+
+// GetUserByUserId 通过userid得到user
+func (u *UserService) GetUserByUserId(userId int64) (*model.User, error) {
+	userInfo, err := dao.GetUserDaoInstance().GetUserByUserId(userId)
+	if err != nil {
+		logger.GlobalLogger.Printf("Time = %v, 寻找数据失败, err = %s", err.Error())
+		return nil, err
+	}
+	return userInfo, err
+}
+
+// GetUserIdByUserName 通过username得到user
+func (u *UserService) GetUserIdByUserName(username string) (*model.User, error) {
+	userInfo, err := dao.GetUserDaoInstance().GetUserByUsername(username)
+	if err != nil {
+		logger.GlobalLogger.Printf("Time = %v, 寻找数据失败, err = %s", err.Error())
+	}
+	return userInfo, err
+}

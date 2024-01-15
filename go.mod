@@ -3,6 +3,7 @@ module Concurrency-Backend
 go 1.21
 
 require (
+	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/cloudwego/hertz v0.7.3
 	github.com/google/uuid v1.5.0
 	github.com/hertz-contrib/jwt v1.0.2
@@ -34,5 +35,6 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
