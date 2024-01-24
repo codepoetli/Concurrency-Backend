@@ -3,7 +3,6 @@ package main
 import (
 	initialization "Concurrency-Backend/init"
 	"Concurrency-Backend/init/router"
-	"Concurrency-Backend/utils/jwt"
 	"Concurrency-Backend/utils/logger"
 	"context"
 
@@ -18,12 +17,13 @@ import (
 // initAll 初始化所有的部分
 func initAll() {
 	initialization.InitConfig()
-	initialization.InitDB()
-	initialization.InitOSS()
-	initialization.InitRDB()
+	// TODO 这些注释掉的部分之后再慢慢加上
+	// initialization.InitDB()
+	// initialization.InitOSS()
+	// initialization.InitRDB()
 	logger.InitLogger(initialization.LogConf)
 
-	jwt.InitJwt()
+	// jwt.InitJwt()
 }
 
 func main() {
