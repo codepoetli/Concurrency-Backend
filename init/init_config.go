@@ -68,6 +68,7 @@ var (
 	LogConf LogConfig
 )
 
+// InitConfig 加载配置文件
 func InitConfig() {
 	stdOutLogger.Info().Msg("In initConfig")
 	f, err := ini.Load(configFilePath)
