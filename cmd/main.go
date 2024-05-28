@@ -19,7 +19,7 @@ func initAll() {
 	// initialization.InitRDB()
 	logger.InitLogger(initialization.LogConf)
 
-	// jwt.InitJwt()
+	// jwt.InitJwt() // 还没实现
 }
 
 func main() {

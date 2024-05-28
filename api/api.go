@@ -1,6 +1,6 @@
 package api
 
-// 定义与前端通信的接口
+// 定义与前端通信的http接口 json格式
 
 // Response :http response
 type Response struct {
