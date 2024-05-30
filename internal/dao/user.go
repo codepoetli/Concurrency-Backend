@@ -4,8 +4,9 @@ import (
 	"Concurrency-Backend/internal/model"
 	"Concurrency-Backend/utils/constants"
 	"errors"
-	"gorm.io/gorm"
 	"sync"
+
+	"gorm.io/gorm"
 )
 
 // userDao 与user相关的数据库操作
@@ -53,6 +54,24 @@ func (u *userDao) GetUserByUserId(userId int64) (*model.User, error) {
 	}
 
 	// 理论上来说userInfos不应当>1, 因为userId是唯一索引
+	if len(userInfos) > 1 {
+		return nil, constants.InnerDataBaseErr
+	}
+
+	return userInfos[0], nil
+}
+
+// CheckUserByNameAndPassword 通过username与password查找在数据库中的User
+func (u *userDao) CheckUserByNameAndPassword(username string, password string) (*model.User, error) {
+	userInfos := make([]*model.User, 0)
+	if err := db.Where("user_name = ?", username).Where("pass_word = ?", password).Find(&userInfos).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, constants.UserNotExistErr
+		}
+		return nil, constants.InnerDataBaseErr
+	}
+
+	// 理论上来说userInfos不应当>1, 因为username是唯一索引
 	if len(userInfos) > 1 {
 		return nil, constants.InnerDataBaseErr
 	}

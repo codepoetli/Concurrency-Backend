@@ -9,8 +9,9 @@ import (
 	"Concurrency-Backend/utils/logger"
 	"Concurrency-Backend/utils/md5"
 	"errors"
-	"github.com/rs/zerolog/log"
 	"sync"
+
+	"github.com/rs/zerolog/log"
 )
 
 // UserService 与用户相关的操作使用的结构体 单例模式的简单实现
@@ -56,13 +57,25 @@ func (u *UserService) UserRegisterInfo(username, password string) error {
 		user.PassWord = password
 	}
 
-	err = dao.GetUserDaoInstance().CreateUser(user) // 调用dao层写入
+	err = dao.GetUserDaoInstance().CreateUser(user) // 调用dao层写数据库
 
 	if err != nil {
 		log.Error().Caller().Str("用户注册错误", err.Error())
 		return constants.CreateDataErr
 	}
 	return nil
+}
+
+// CheckUserInfo 从username,password获得User
+func (u *UserService) CheckUserInfo(username, password string) (*model.User, error) {
+	userInfo, err := dao.GetUserDaoInstance().CheckUserByNameAndPassword(username, password)
+
+	if err != nil {
+		logger.GlobalLogger.Printf("Time = %v, 寻找数据失败, err = %s", err.Error())
+		return nil, err
+	}
+
+	return userInfo, nil
 }
 
 // GetUserByUserId 通过userid得到user

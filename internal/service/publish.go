@@ -43,19 +43,19 @@ func getUploadURL(userId int64, fileName string) string {
 
 // 上传视频到oss
 func (p *publishService) uploadVideoToOSS(data *multipart.FileHeader, userId int64, filename string) error {
-	src, err := data.Open()
-	if err != nil {
-		logger.GlobalLogger.Printf("Error in OpenData: %v", err.Error())
-		return err
-	}
-	defer src.Close()
+	// src, err := data.Open()
+	// if err != nil {
+	// 	logger.GlobalLogger.Printf("Error in OpenData: %v", err.Error())
+	// 	return err
+	// }
+	// defer src.Close()
 
-	// 先将文件流上传至BucketDirectory目录下
-	err = oss.UploadFromReader(getUploadPath(userId, filename), src)
-	if err != nil {
-		logger.GlobalLogger.Printf("Error in UploadFromReader: %v", err.Error())
-		return err
-	}
+	// // 先将文件流上传至BucketDirectory目录下
+	// err = oss.UploadFromReader(getUploadPath(userId, filename), src)
+	// if err != nil {
+	// 	logger.GlobalLogger.Printf("Error in UploadFromReader: %v", err.Error())
+	// 	return err
+	// }
 
 	return nil
 }
@@ -93,26 +93,31 @@ func (p *publishService) PublishInfo(data *multipart.FileHeader, userId int64, t
 		return constants.SavingFailErr
 	}
 
-	//截取视频的第一帧作为cover
-	//saveVideo := saveDir + "/" + videoName
-	//coverName := files.GetFileNameWithoutExt(videoName) + "_cover" + ".jpeg"
-	//saveCover := saveDir + "/" + coverName
-	//err = files.ExtractCoverFromVideo(saveVideo, saveCover)
-	//if err != nil {
-	//	logger.GlobalLogger.Printf("Time = %v, Extracting Cover Error = %v", time.Now(), err.Error())
-	//	return constants.SavingFailErr
-	//}
-	coverName := files.GetFileNameWithoutExt(videoName) + "_cover" + ".jpeg"
-	saveCover := saveDir + "/" + coverName
+	coverName := ""
+	// 截取视频的第一帧作为cover
+	// saveVideo := saveDir + "/" + videoName
+	// coverName := files.GetFileNameWithoutExt(videoName) + "_cover" + ".jpeg"
+	// saveCover := saveDir + "/" + coverName
+	// err = files.ExtractCoverFromVideo(saveVideo, saveCover)
+	// if err != nil {
+	// 	logger.GlobalLogger.Printf("Time = %v, Extracting Cover Error = %v", time.Now(), err.Error())
+	// 	return constants.SavingFailErr
+	// }
+	// coverName := files.GetFileNameWithoutExt(videoName) + "_cover" + ".jpeg"
+	// saveCover := saveDir + "/" + coverName
 
-	//上传视频与封面
+	//上传视频与封面 怎么回滚？
 	logger.GlobalLogger.Print("Saving Complete, Start Uploading")
 	err = p.uploadVideoToOSS(data, userId, videoName)
 	if err != nil {
-		logger.GlobalLogger.Printf("Time = %v, Extracting Cover Error = %v", time.Now(), err.Error())
+		logger.GlobalLogger.Printf("Time = %v, Upload Video Error = %v", time.Now(), err.Error())
 		return constants.UploadFailErr
 	}
-	err = p.uploadCoverToOSS(userId, saveCover, coverName)
+	// err = p.uploadCoverToOSS(userId, saveCover, coverName)
+	// if err != nil {
+	// 	logger.GlobalLogger.Printf("Time = %v, Upload Cover Error = %v", time.Now(), err.Error())
+	// 	return constants.UploadFailErr
+	// }
 
 	//写入数据库
 	video := &model.Video{

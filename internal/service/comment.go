@@ -24,7 +24,7 @@ func GetCommentServiceInstance() *commentService {
 	return commentServiceInstance
 }
 
-// CommentInfoPush 添加评论
+// CommentInfoPush 添加评论 时间？一致性？更新（推送）策略？
 func (*commentService) CommentInfoPush(userId, videoId int64, text string) (int64, error) {
 	var err error
 	var commentId int64
@@ -32,7 +32,7 @@ func (*commentService) CommentInfoPush(userId, videoId int64, text string) (int6
 	if err != nil {
 		return -1, err
 	}
-	err = dao.GetCommentDaoInstance().AddCommentCount(videoId)
+	err = dao.GetCommentDaoInstance().AddCommentCount(videoId) // 评论数加一
 	if err != nil {
 		return -1, err
 	}
@@ -47,7 +47,7 @@ func (*commentService) CommentInfoDelete(userId, videoId, commentId int64) error
 	if err != nil {
 		return err
 	}
-	err = dao.GetCommentDaoInstance().SubCommentCount(videoId)
+	err = dao.GetCommentDaoInstance().SubCommentCount(videoId) // 评论数减一
 	if err != nil {
 		return nil
 	}
