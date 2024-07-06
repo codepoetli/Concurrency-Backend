@@ -14,7 +14,7 @@ import (
 func initAll() {
 	initialization.InitConfig()
 	// TODO 这些注释掉的部分之后再慢慢加上
-	// initialization.InitDB()
+	initialization.InitDB()
 	// initialization.InitOSS()
 	// initialization.InitRDB()
 	logger.InitLogger(initialization.LogConf)
@@ -35,8 +35,8 @@ func main() {
 	// start
 	initAll()
 
-	hServer := server.Default(server.WithHostPorts(fmt.Sprintf("10.12.57.17:%s", initialization.Port))) // 本机ip + 端口
-	// hServer := server.Default(server.WithHostPorts(fmt.Sprintf("127.0.0.1:%s", initialization.Port)))
+	// hServer := server.Default(server.WithHostPorts(fmt.Sprintf("10.12.57.17:%s", initialization.Port))) // 本机ip + 端口
+	hServer := server.Default(server.WithHostPorts(fmt.Sprintf("127.0.0.1:%s", initialization.Port)))
 	router.InitRouterHertz(hServer)
 	hServer.Spin() // 运行 Hertz 服务器，接收到退出信号后可退出服务
 }

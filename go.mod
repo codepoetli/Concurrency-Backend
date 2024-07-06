@@ -9,7 +9,8 @@ require (
 	github.com/hertz-contrib/jwt v1.0.2
 	github.com/rs/zerolog v1.31.0
 	gopkg.in/ini.v1 v1.67.0
-	gorm.io/gorm v1.25.5
+	gorm.io/driver/mysql v1.5.6
+	gorm.io/gorm v1.25.7
 )
 
 require (
@@ -19,6 +20,7 @@ require (
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/cloudwego/netpoll v0.5.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
+	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.1 // indirect
 	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/henrylee2cn/ameda v1.4.10 // indirect

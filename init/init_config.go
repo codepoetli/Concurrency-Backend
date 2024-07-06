@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	configFilePath = "./configs/config.ini"
+	configFilePath = "../configs/config.ini"
 )
 
 // stdOutLogger 初始化标准输出的Logger
@@ -44,7 +44,7 @@ type LogConfig struct {
 	LogFilePath    string
 }
 
-// 解析配置文件
+// 解析配置文件 全局变量
 var (
 	Port       string // 服务启动端口
 	dbHost     string // 数据库服务器主机
@@ -74,6 +74,9 @@ func InitConfig() {
 	f, err := ini.Load(configFilePath)
 	if err != nil {
 		log.Panic().Caller().Err(errors.New("配置文件初始化失败"))
+	}
+	if f == nil {
+		log.Panic().Caller().Err(errors.New("Configuration file was not loaded properly."))
 	}
 
 	loadServer(f)

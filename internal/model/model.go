@@ -45,3 +45,20 @@ type Comment struct {
 	LikeCount  int64  `gorm:"type:BIGINT;not null;default:0;comment:评论的点赞数" json:"like_count"`
 	TeaseCount int64  `gorm:"type:BIGINT;not null;default:0;comment:评论的diss数量" json:"tease_count"`
 }
+
+// Follow 关注：数据库实体
+type Follow struct {
+	ID         uint  `gorm:"primarykey"`
+	FromUserID int64 `gorm:"type:BIGINT;not null;uniqueIndex:idx_member_id;comment:粉丝用户ID"`
+	ToUserID   int64 `gorm:"type:BIGINT;not null;uniqueIndex:idx_member_id;comment:被关注用户ID"`
+	IsFollow   int8  `gorm:"type:TINYINT;not null;comment:软删除的关注记录"`
+}
+
+// Message 消息：数据库实体
+type Message struct {
+	gorm.Model
+	MessageID  int64  `gorm:"type:bigint;unsigned;not null;unique;uniqueIndex:idx_message_id" json:"message_id"`
+	FromUserID int64  `gorm:"type:BIGINT;not null;index:idx_user_id;comment:发送用户ID"`
+	ToUserId   int64  `gorm:"type:BIGINT;not null;index:idx_to_user_id;comment:接收用户ID"`
+	Content    string `gorm:"type:varchar(300);not null;comment:聊天内容" json:"content"`
+}
